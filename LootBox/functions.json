@@ -1,0 +1,5 @@
+exports.Skin = function(name,rarity, type){
+	this.name = name;
+	this.rarity = rarity;
+	this.type = type;
+}
