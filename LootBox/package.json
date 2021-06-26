@@ -1,11 +1,11 @@
 {
-  "name": "gacha-bot",
+  "name": "Sumairu",
   "version": "0.0.1",
   "Status": "Alpha",
-  "description": "My first introduction to gambling",
+  "description": "Wholesome bot",
   "main": "bot.js",
-  "author": "Woking",
-  "date started": "8th November 2018",
+  "author": "Woking & Troupz",
+  "date started": "26th June 2021",
   "scripts": {
     "start": "nodemon bot.js"
   },
