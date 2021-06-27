@@ -76,11 +76,16 @@ bot.on("message", (message) => {
           const results = await fetchRedditTop25();
           channel.send(
             results.data.data.children[Math.floor(Math.random() * 25)].data
-              .url_overridden_by_dest
+              .url_overridden_by_dest //lolwhat
           );
         };
         fetch();
 
+        break;
+      default:
+        channel.send(
+          "This is not a command. Have a fantastic day awesome person!"
+        );
         break;
     }
   }
