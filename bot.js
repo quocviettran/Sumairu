@@ -52,7 +52,9 @@ bot.on("message", (message) => {
     `Hi ${author}! Here is a list of commands:
     !help - List of commands
     !sup - Bot responds with a nice message
-    !smile - Post a random wholesome meme`,
+    !smile - Post a random wholesome meme
+    !aww - Post a cute picture
+    !motivateme - Let me help you get motivated!`,
   ];
 
   if (content.startsWith("!")) {
@@ -64,7 +66,7 @@ bot.on("message", (message) => {
         message.author.send(helpMsg);
         break;
       case "sup":
-        channel.send("sup bitch");
+        channel.send(`sup ${author} you little bitch`);
         break;
       case "smile":
         fetchSubreddit("wholesomememes", channel);
@@ -76,9 +78,7 @@ bot.on("message", (message) => {
         fetchSubreddit("getmotivated", channel);
         break;
       default:
-        channel.send(
-          "This is not a command. Have a fantastic day awesome person!"
-        );
+        channel.send(`This is not a command. Have a fantastic day ${author}`);
         break;
     }
   }
