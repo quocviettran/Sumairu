@@ -54,7 +54,8 @@ bot.on("message", (message) => {
     !sup - Bot responds with a nice message
     !smile - Post a random wholesome meme
     !aww - Post a cute picture
-    !motivateme - Let me help you get motivated!`,
+    !motivateme - Let me help you get motivated!
+    !erosennin - When you feel like Jiraya :^)`,
   ];
 
   if (content.startsWith("!")) {
@@ -76,6 +77,9 @@ bot.on("message", (message) => {
         break;
       case "motivateme":
         fetchSubreddit("getmotivated", channel);
+        break;
+      case "erosennin":
+        fetchSubreddit("nsfw", channel);
         break;
       default:
         channel.send(`This is not a command. Have a fantastic day ${author}`);
