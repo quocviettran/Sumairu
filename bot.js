@@ -57,13 +57,6 @@ const fetchRedditTop25 = async () => {
       return response;
     });
 };
-// async function fetchRedditTop5() {
-//   return await axios
-//     .get("https://www.reddit.com/r/all/top/.json?count=1")
-//     .then((response) => {
-//       return response;
-//     });
-// }
 
 // Initialize Discord Bot
 var bot = new Discord.Client();
@@ -112,38 +105,5 @@ bot.on("message", (message) => {
     }
   }
 });
-
-/*bot.on('message',  (user, userID, channelID, message, evt) => {
-    console.log(message.author);
-
-	// Our bot needs to know if it will execute a command
-    // It will listen for messages that will start with `!`
-    if (message.substring(0, 1) == '!') {
-        var args = message.substring(1).split(' ');
-        var cmd = args[0];
-
-		args = args.splice(1);
-
-        /*switch(cmd) {
-            // !ping
-            case 'ping':
-                message.channel.send("pong");
-				break;
-			case 'loot':
-				var obj = chars.openloot();
-				bot.sendMessage({
-					to: channelID,
-					message: obj.name
-				});
-				break;
-			case 'test':
-				message.channel.send("TEST",{
-					file : ["./Skins/Aatrox_JusticarSkin.png"]
-				});
-			break;
-            // Just add any case commands if you want to..
-        }
-     }
-});*/
 
 bot.login(auth.token);
