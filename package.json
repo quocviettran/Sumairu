@@ -3,10 +3,11 @@
   "version": "0.0.1",
   "Status": "Alpha",
   "description": "Wholesome bot",
-  "worker": "bot.js",
+  "main": "bot.js",
   "author": "Woking & Troupz",
   "date started": "26th June 2021",
   "scripts": {
+    "worker": "bot.js",
     "start": "nodemon bot.js"
   },
   "dependencies": {
