@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "Status": "Alpha",
   "description": "Wholesome bot",
-  "main": "bot.js",
+  "worker": "bot.js",
   "author": "Woking & Troupz",
   "date started": "26th June 2021",
   "scripts": {
