@@ -7,7 +7,7 @@
   "author": "Woking & Troupz",
   "date started": "26th June 2021",
   "scripts": {
-    "worker": "bot.js",
+    "worker": "nodemon bot.js",
     "start": "nodemon bot.js"
   },
   "dependencies": {
