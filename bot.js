@@ -79,7 +79,14 @@ bot.on("message", (message) => {
         fetchSubreddit("getmotivated", channel);
         break;
       case "erosennin":
-        fetchSubreddit("nsfw", channel);
+        console.log(channel.nsfw);
+        if (channel.nsfw) {
+          fetchSubreddit("nsfw", channel);
+        } else {
+          channel.send(
+            `Ero-${author}! This command can not be used in a non NSFW channel.`
+          );
+        }
         break;
       default:
         channel.send(`This is not a command. Have a fantastic day ${author}`);
