@@ -1,11 +1,12 @@
 const axios = require("axios");
+const Discord = require("discord.js");
 
 function rngRoll() {
   const rng = Math.floor(Math.random() * 4);
   console.log(rng);
   switch (rng) {
     case 1:
-      return "&t=all";
+      return "&t=today";
     case 2:
       return "&t=year";
     case 3:
@@ -31,6 +32,16 @@ const fetchSubreddit = async (subreddit, channel) => {
 
   if (!responseData.url_overridden_by_dest) {
     channel.send(responseData.title);
+  } else if (subreddit == "fiftyfifty") {
+    //channel.send(responseData.title);
+    channel.send(responseData.title, {
+      files: [
+        {
+          attachment: responseData.url_overridden_by_dest,
+          name: "SPOILER_FILE.jpg",
+        },
+      ],
+    });
   } else {
     channel.send(responseData.url_overridden_by_dest);
   }

@@ -92,6 +92,9 @@ bot.on("message", (message) => {
           );
         }
         break;
+      case "5050":
+        fetchSubreddit("fiftyfifty", channel);
+        break;
       default:
         channel.send(`This is not a command. Have a fantastic day ${author}`);
         break;
