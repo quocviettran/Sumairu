@@ -80,6 +80,7 @@ bot.on("message", (message) => {
         break;
       case "erosennin":
         fetchSubreddit("nsfw", channel);
+        channel.send("https://tenor.com/view/ilove-it-naruto-jiraiya-d%c3%aac%e1%bb%a5-th%c3%adch-gif-19652587");
         break;
       default:
         channel.send(`This is not a command. Have a fantastic day ${author}`);
