@@ -1,3 +1,4 @@
+//Importing packages
 const Discord = require("discord.js");
 const logger = require("winston");
 const auth = require("./auth.json");
@@ -7,21 +8,22 @@ const http = require("http");
 
 //Signal listening
 process
-  .on('SIGTERM', shutdown('SIGTERM'))
-  .on('SIGINT', shutdown('SIGINT'))
-  .on('uncaughtException', shutdown('uncaughtException'));
+  .on("SIGTERM", shutdown("SIGTERM"))
+  .on("SIGINT", shutdown("SIGINT"))
+  .on("uncaughtException", shutdown("uncaughtException"));
 
-http.createServer((req, res) => res.end('hi'))
-  .listen(process.env.PORT || 3000, () => console.log('Listening'));
+http
+  .createServer((req, res) => res.end("hi"))
+  .listen(process.env.PORT || 3000, () => console.log("Listening"));
 
 function shutdown(signal) {
   return (err) => {
-    console.log(`${ signal }...`);
+    console.log(`${signal}...`);
     if (err) console.error(err.stack || err);
     setTimeout(() => {
-      console.log('...waited 5s, exiting.');
+      console.log("...waited 2s, exiting.");
       process.exit(err ? 1 : 0);
-    }, 5000).unref();
+    }, 2000).unref();
   };
 }
 
@@ -48,14 +50,25 @@ function rngRoll() {
   }
 }
 
-const fetchRedditTop25 = async () => {
+const fetchRedditTop25 = async (subreddit) => {
+  //Get reddit's API in .json
   return await axios
-    .get(
-      "https://www.reddit.com/r/wholesomememes/top/.json?count=1" + rngRoll()
-    )
+    .get(`https://www.reddit.com/r/${subreddit}/top/.json?count=1${rngRoll()}`)
     .then((response) => {
       return response;
     });
+};
+
+const fetchSubreddit = async (subreddit, channel) => {
+  const results = await fetchRedditTop25(subreddit);
+  const responseData =
+    results.data.data.children[Math.floor(Math.random() * 25)].data;
+
+  if (!responseData.url_overridden_by_dest) {
+    channel.send(responseData.title);
+  } else {
+    channel.send(responseData.url_overridden_by_dest);
+  }
 };
 
 // Initialize Discord Bot
@@ -69,10 +82,12 @@ bot.on("message", (message) => {
   var messageId = message.id;
   var channel = message.channel;
   var author = message.author;
-  var apiToken = "RGAPI-42f4e3ff-14eb-4e2f-b2e7-993842f250fb"; //Renew after each day
 
   var helpMsg = [
-    "These are the following commands to this bot in alpha version ",
+    `Hi ${author}! Here is a list of commands:
+    !help - List of commands
+    !sup - Bot responds with a nice message
+    !smile - Post a random wholesome meme`,
   ];
 
   if (content.startsWith("!")) {
@@ -87,15 +102,13 @@ bot.on("message", (message) => {
         channel.send("sup bitch");
         break;
       case "smile":
-        const fetch = async () => {
-          const results = await fetchRedditTop25();
-          channel.send(
-            results.data.data.children[Math.floor(Math.random() * 25)].data
-              .url_overridden_by_dest //lolwhat
-          );
-        };
-        fetch();
-
+        fetchSubreddit("wholesomememes", channel);
+        break;
+      case "aww":
+        fetchSubreddit("aww", channel);
+        break;
+      case "motivateme":
+        fetchSubreddit("getmotivated", channel);
         break;
       default:
         channel.send(
