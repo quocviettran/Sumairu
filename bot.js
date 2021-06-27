@@ -81,8 +81,11 @@ bot.on("message", (message) => {
       case "erosennin":
         console.log(channel.nsfw);
         if (channel.nsfw) {
-          fetchSubreddit("nsfw", channel);
-          channel.send("https://tenor.com/view/ilove-it-naruto-jiraiya-d%c3%aac%e1%bb%a5-th%c3%adch-gif-19652587");
+          fetchSubreddit("nsfw", channel).then(() => {
+            channel.send(
+              "https://tenor.com/view/ilove-it-naruto-jiraiya-d%c3%aac%e1%bb%a5-th%c3%adch-gif-19652587"
+            );
+          });
         } else {
           channel.send(
             `Ero-${author}! This command can not be used in a non NSFW channel.`
