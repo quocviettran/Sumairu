@@ -4,7 +4,7 @@ const logger = require("winston");
 const auth = require("./auth.json");
 const fetch = require("node-fetch");
 const http = require("http");
-const { fetchSubreddit } = require("./redditfunctions.js");
+const { fetchImage } = require("./redditfunctions.js");
 
 //Signal listening
 process
@@ -61,7 +61,7 @@ bot.on("message", (message) => {
   if (content.startsWith("!")) {
     var cmd = content.split(" ");
 
-    console.log(cmd[0].substring(1));
+    console.log(`Command is: !${cmd[0].substring(1)}`);
     switch (cmd[0].substring(1)) {
       case "help":
         message.author.send(helpMsg);
@@ -70,21 +70,23 @@ bot.on("message", (message) => {
         channel.send(`sup ${author} you little bitch`);
         break;
       case "smile":
-        fetchSubreddit("wholesomememes", channel);
+        fetchImage("wholesomememes", channel);
         break;
       case "aww":
-        fetchSubreddit("aww", channel);
+        fetchImage("aww", channel);
         break;
       case "motivateme":
-        fetchSubreddit("getmotivated", channel);
+        fetchImage("getmotivated", channel);
         break;
       case "erosennin":
-        console.log(channel.nsfw);
         if (channel.nsfw) {
-          fetchSubreddit("nsfw", channel).then(() => {
-            channel.send(
-              "https://tenor.com/view/ilove-it-naruto-jiraiya-d%c3%aac%e1%bb%a5-th%c3%adch-gif-19652587"
-            );
+          channel.send("[NSFW]");
+          fetchImage("highresnsfw", channel).then(() => {
+            setTimeout(() => {
+              channel.send(
+                `https://tenor.com/view/ilove-it-naruto-jiraiya-d%c3%aac%e1%bb%a5-th%c3%adch-gif-19652587`
+              );
+            }, 1000);
           });
         } else {
           channel.send(
@@ -93,13 +95,14 @@ bot.on("message", (message) => {
         }
         break;
       case "5050":
-        fetchSubreddit("fiftyfifty", channel);
+        fetchImage("fiftyfifty", channel);
         break;
       default:
         channel.send(`This is not a command. Have a fantastic day ${author}`);
         break;
     }
   }
+  console.log("--------------------------------------");
 });
 
 bot.login(auth.token);
