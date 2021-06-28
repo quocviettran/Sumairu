@@ -58,6 +58,10 @@ bot.on("message", (message) => {
     !erosennin - When you feel like Jiraya :^)`,
   ];
 
+  if (author.username == "BambooMy") {
+    channel.send("UwU");
+  }
+
   if (content.startsWith("!")) {
     var cmd = content.split(" ");
 
