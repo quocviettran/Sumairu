@@ -43,7 +43,7 @@ bot.on("ready", () => {
 });
 
 bot.on("message", (message) => {
-  var content = message.content;
+  var content = message.content.toLowerCase();
   var messageId = message.id;
   var channel = message.channel;
   var author = message.author;
@@ -60,6 +60,14 @@ bot.on("message", (message) => {
 
   if (author.username == "BambooMy") {
     channel.send("UwU");
+  }
+
+  if (
+    content.includes("she") &&
+    content.includes("esh") &&
+    author.username != "Sumairu"
+  ) {
+    channel.send("https://tenor.com/view/ronan-sheesh-sheesh-gif-21479305");
   }
 
   if (content.startsWith("!")) {
