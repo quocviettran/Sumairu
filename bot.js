@@ -5,6 +5,8 @@ const auth = require("./auth.json");
 const fetch = require("node-fetch");
 const http = require("http");
 const { fetchImage } = require("./redditfunctions.js");
+const ytdl = require("ytdl-core");
+const { execute, skip, stop } = require("./musicfunctions.js");
 
 //Signal listening
 process
@@ -42,11 +44,15 @@ bot.on("ready", () => {
   logger.info("Logged in as " + bot.user.username);
 });
 
-bot.on("message", (message) => {
+const queue = new Map();
+
+bot.on("message", async (message) => {
   var content = message.content;
   var messageId = message.id;
   var channel = message.channel;
   var author = message.author;
+
+  const serverQueue = queue.get(message.guild.id);
 
   var helpMsg = [
     `Hi ${author}! Here is a list of commands:
@@ -62,7 +68,7 @@ bot.on("message", (message) => {
     channel.send("UwU");
   }
 
-  if (content.startsWith("!")) {
+  if (content.startsWith("$")) {
     var cmd = content.split(" ");
 
     console.log(`Command is: !${cmd[0].substring(1)}`);
@@ -100,6 +106,15 @@ bot.on("message", (message) => {
         break;
       case "5050":
         fetchImage("fiftyfifty", channel);
+        break;
+      case "play":
+        execute(message, serverQueue, queue);
+        break;
+      case "skip":
+        skip(message, serverQueue);
+        break;
+      case "stop":
+        stop(message, serverQueue);
         break;
       default:
         channel.send(`This is not a command. Have a fantastic day ${author}`);
