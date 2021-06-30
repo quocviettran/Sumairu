@@ -1,4 +1,5 @@
 const ytdl = require("ytdl-core");
+const yts = require("yt-search");
 
 // function clone(obj) {
 //   if (null == obj || "object" != typeof obj) return obj;
@@ -24,13 +25,21 @@ async function execute(message, serverQueue, queue) {
     );
   }
 
-  const songInfo = await ytdl.getInfo(args[1]);
-  const song = {
-    title: songInfo.videoDetails.title,
-    url: songInfo.videoDetails.video_url,
-  };
-
-  const info = ytdl.downloadFromInfo(songInfo, {});
+  let song;
+  if (ytdl.validateURL(args[1])) {
+    const songInfo = await ytdl.getInfo(args[1]);
+    song = {
+      title: songInfo.title,
+      url: songInfo.video_url,
+    };
+  } else {
+    const { videos } = await yts(args.slice(1).join(" "));
+    if (!videos.length) return message.channel.send("No songs were found!");
+    song = {
+      title: videos[0].title,
+      url: videos[0].url,
+    };
+  }
 
   if (!serverQueue) {
     const queueContruct = {

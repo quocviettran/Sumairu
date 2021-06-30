@@ -6,6 +6,7 @@ const fetch = require("node-fetch");
 const http = require("http");
 const { fetchImage } = require("./redditfunctions.js");
 const ytdl = require("ytdl-core");
+const yts = require("yt-search");
 const { execute, skip, stop } = require("./musicfunctions.js");
 
 //Signal listening
@@ -44,7 +45,6 @@ bot.on("ready", () => {
   logger.info("Logged in as " + bot.user.username);
 });
 
-
 const queue = new Map();
 
 bot.on("message", async (message) => {
@@ -70,7 +70,6 @@ bot.on("message", async (message) => {
     channel.send("UwU");
   }
 
-
   if (
     content.includes("she") &&
     content.includes("esh") &&
@@ -79,9 +78,7 @@ bot.on("message", async (message) => {
     channel.send("https://tenor.com/view/ronan-sheesh-sheesh-gif-21479305");
   }
 
-
-
-    if (content.startsWith("$")) {
+  if (content.startsWith("$")) {
     var cmd = content.split(" ");
 
     console.log(`Command is: !${cmd[0].substring(1)}`);
