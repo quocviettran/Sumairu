@@ -4,10 +4,10 @@ const logger = require("winston");
 const auth = require("./auth.json");
 const fetch = require("node-fetch");
 const http = require("http");
-const { fetchImage } = require("./redditfunctions.js");
+const { fetchImage, rngRoll } = require("./redditfunctions.js");
 const ytdl = require("ytdl-core");
 const yts = require("yt-search");
-const { execute, skip, stop } = require("./musicfunctions.js");
+const { execute, skip, stop, playFromUrl } = require("./musicfunctions.js");
 
 //Signal listening
 process
@@ -58,16 +58,53 @@ bot.on("message", async (message) => {
 
   var helpMsg = [
     `Hi ${author}! Here is a list of commands:
-    !help - List of commands
-    !sup - Bot responds with a nice message
-    !smile - Post a random wholesome meme
-    !aww - Post a cute picture
-    !motivateme - Let me help you get motivated!
-    !erosennin - When you feel like Jiraya :^)`,
+    $help - List of commands
+    $sup - Bot responds with a nice message
+    $smile - Post a random wholesome meme
+    $aww - Post a cute picture
+    $motivateme - Let me help you get motivated!
+    $erosennin - When you feel like Jiraya :^)
+    $5050 - Fifty fifty game
+
+    Music:
+    $play [youtube-url or keyword]
+    $skip
+    $stop`,
   ];
 
+  if (content.includes("and his name is")) {
+    const url = "https://www.youtube.com/watch?v=LHcRI5-X1lc";
+    playFromUrl(message, serverQueue, queue, url);
+  }
+
   if (author.username == "BambooMy") {
-    channel.send("UwU");
+    rng = rngRoll(2);
+    switch (rng) {
+      case 0:
+        channel.send("UwU");
+        break;
+      case 1:
+        channel.send("OwO");
+        break;
+    }
+  }
+
+  if (author.username == "Mo0nica") {
+    rng = rngRoll(4);
+    switch (rng) {
+      case 0:
+        channel.send(`shut up ${message.author}!`);
+        break;
+      case 1:
+        channel.send(`hold kjeft ${message.author}!`);
+        break;
+      case 2:
+        channel.send(`shut your mouth ${message.author}!`);
+        break;
+      case 3:
+        channel.send(`stop talking ${message.author}!`);
+        break;
+    }
   }
 
   if (
@@ -75,6 +112,8 @@ bot.on("message", async (message) => {
     content.includes("esh") &&
     author.username != "Sumairu"
   ) {
+    const url = "https://www.youtube.com/watch?v=YgT6XABqS5Y";
+    playFromUrl(message, serverQueue, queue, url);
     channel.send("https://tenor.com/view/ronan-sheesh-sheesh-gif-21479305");
   }
 

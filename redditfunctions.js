@@ -66,4 +66,4 @@ const fetchImage = async (subreddit, channel) => {
   }
 };
 
-exports.fetchImage = fetchImage;
+module.exports = { fetchImage, rngRoll };

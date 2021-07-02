@@ -1,14 +1,44 @@
 const ytdl = require("ytdl-core");
 const yts = require("yt-search");
 
-// function clone(obj) {
-//   if (null == obj || "object" != typeof obj) return obj;
-//   var copy = obj.constructor();
-//   for (var attr in obj) {
-//     if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-//   }
-//   return copy;
-// }
+async function playFromUrl(message, serverQueue, queue, url) {
+  const voiceChannel = message.member.voice.channel;
+  if (voiceChannel) {
+    const songInfo = await ytdl.getInfo(url);
+    let song;
+    song = {
+      title: songInfo.videoDetails.title,
+      url: songInfo.videoDetails.video_url,
+    };
+
+    console.log(song);
+
+    if (!serverQueue) {
+      const queueContruct = {
+        textChannel: message.channel,
+        voiceChannel: voiceChannel,
+        connection: null,
+        songs: [],
+        volume: 5,
+        playing: true,
+      };
+
+      queue.set(message.guild.id, queueContruct);
+
+      queueContruct.songs.push(song);
+
+      try {
+        var connection = await voiceChannel.join();
+        queueContruct.connection = connection;
+        play(message.guild, queueContruct.songs[0], queue);
+      } catch (err) {
+        console.log(err);
+        queue.delete(message.guild.id);
+        return message.channel.send(err);
+      }
+    }
+  }
+}
 
 async function execute(message, serverQueue, queue) {
   const args = message.content.split(" ");
@@ -26,11 +56,12 @@ async function execute(message, serverQueue, queue) {
   }
 
   let song;
+
   if (ytdl.validateURL(args[1])) {
     const songInfo = await ytdl.getInfo(args[1]);
     song = {
-      title: songInfo.title,
-      url: songInfo.video_url,
+      title: songInfo.videoDetails.title,
+      url: songInfo.videoDetails.video_url,
     };
   } else {
     const { videos } = await yts(args.slice(1).join(" "));
@@ -109,7 +140,9 @@ function play(guild, song, queue) {
     })
     .on("error", (error) => console.error(error));
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-  serverQueue.textChannel.send(`Start playing: **${song.title}**`);
+  if (!song.title.includes("John") && !song.title.includes("SHEESH")) {
+    serverQueue.textChannel.send(`Start playing: **${song.title}**`);
+  }
 }
 
-module.exports = { execute, skip, stop };
+module.exports = { execute, skip, stop, playFromUrl };
