@@ -6,7 +6,7 @@ const fetch = require("node-fetch");
 const http = require("http");
 const ytdl = require("ytdl-core");
 const yts = require("yt-search");
-const { execute, skip, stop, playFromUrl } = require("./musicfunctions.js");
+const { execute, skip, stop, playFromUrl } = require("./functions/musicfunctions.js");
 //const {setup, shutdown } = require("./config.js")
 const { fetchImage } = require("./functions/redditfunctions.js");
 
