@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "Status": "Alpha",
   "description": "Wholesome bot",
-  "main": "bot.js",
+  "main": "main.js",
   "author": "Quoc Viet Tran, Nhat Hao Bui, Hung Quang Thieu",
   "date started": "26th June 2021",
   "scripts": {
-    "worker": "nodemon bot.js",
-    "start": "nodemon bot.js"
+    "worker": "nodemon main.js",
+    "start": "nodemon main.js"
   },
   "dependencies": {
     "@discordjs/opus": "^0.5.3",
