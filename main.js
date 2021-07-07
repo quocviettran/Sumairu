@@ -8,7 +8,7 @@ const ytdl = require("ytdl-core");
 const yts = require("yt-search");
 const { execute, skip, stop, playFromUrl } = require("./musicfunctions.js");
 //const {setup, shutdown } = require("./config.js")
-const { fetchImage } = require("./redditfunctions.js");
+const { fetchImage } = require("./functions/redditfunctions.js");
 
 //Signal listening
 process
